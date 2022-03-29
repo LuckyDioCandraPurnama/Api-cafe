@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +23,5 @@ use App\Http\Controllers\TransactionController;
 
 Route::get('menu', [MenuController::class, 'index']);
 Route::post('transaction', [TransactionController::class, 'store']);
+Route::post('detailtransaction', [TransactionDetailController::class, 'store']);
 
