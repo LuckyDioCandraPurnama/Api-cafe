@@ -20,7 +20,7 @@ class MenuTableSeeder extends Seeder
         $faker->addProvider(new \FakerRestaurant\Provider\id_ID\Restaurant($faker));
         $faker->addProvider(new \Liior\Faker\Prices($faker));
 
-        for ($i=1; $i <= 10 ; $i++) { 
+        for ($i=0; $i <= 10 ; $i++) { 
             DB::table('menus')->insert([
                 // 'id_category' => Category::all()->random()->id,
                 'id_category' => $faker->randomElement([1, 2, 3]),

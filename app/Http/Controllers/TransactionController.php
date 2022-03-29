@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Menu;
 use App\Models\Transaction;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -24,8 +26,10 @@ class TransactionController extends Controller
         $store->id_menu = $request->id_menu;
         $store->table = $request->table;
         $store->payment = $request->payment;
+        $store->date = Carbon::now();
+        $store->status = 'new';
 
-        //GET HARGA MENU
+        //GET MENU PRICE
         $menu = Menu::where('id_menu', '=', $store->id_menu)->first();
         $price = $menu->price;
 
@@ -34,11 +38,11 @@ class TransactionController extends Controller
 
         $store->save();
 
-        $data = DetailTransaksi::where('id_detail_transaksi', '=', $store->id_detail_transaksi)->first();
+        $data = Transaction::where('id_transaction', '=', $store->id_transaction)->first();
 
         return response()->json([
             'success' => true,
-            'message' => 'Berhasil Tambah Detail Transaksi',
+            'message' => 'Add Data Transaction Success',
             'data' => $data
         ]);
     }

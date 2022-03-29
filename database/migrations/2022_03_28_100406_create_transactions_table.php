@@ -16,6 +16,8 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('id_transaction');
             $table->unsignedBigInteger('id_menu');
+            $table->integer('quantity');
+            $table->integer('subtotal');
             $table->string('table');
             $table->date('date');
             $table->string('status');
