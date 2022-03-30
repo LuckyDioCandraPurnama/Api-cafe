@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\TransactionDetail;
 use App\Models\Menu;
+use Illuminate\Support\Facades\DB;
+
 
 class TransactionDetailController extends Controller
 {
@@ -22,7 +24,7 @@ class TransactionDetailController extends Controller
         }
 
         $store = new TransactionDetail();
-        $store->id_transaction = $request->id_transaction;
+        $store->id_transaction = '1';
         $store->id_menu = $request->id_menu;
 
         //GET MENU PRICE
@@ -36,10 +38,33 @@ class TransactionDetailController extends Controller
 
         $data = TransactionDetail::where('id_transaction', '=', $store->id_transaction)->first();
 
+        return response()->json($data);
+    }
+    public function getTotal($id)
+    {
+        $total = TransactionDetail::where('id_transaction', $id)->sum('subtotal');
+        
         return response()->json([
-            'success' => true,
-            'message' => 'Add Data Success',
-            'data' => $data
+            'total' => $total
         ]);
+    }
+
+    // public function getAll()
+    // {
+    //     $data = DB::table('transaction_details')->join('menus', 'transaction_details.id_menu', '=', 'menus.id_menu')      
+    //                                   ->select('transaction_details.*', 'menus.name', 'menus.price')
+    //                                   ->where('transaction_details.id_transaction', '=', '1')
+    //                                   ->get();
+    //     return response()->json($data);
+    // }
+    
+    public function getById()
+    {
+        // $data = TransactionDetail::where('id', '=', '1')->first();  
+        $data = DB::table('transaction_details')->join('menus', 'transaction_details.id_menu', '=', 'menus.id_menu')      
+                                      ->select('transaction_details.*', 'menus.name', 'menus.price')
+                                      ->where('transaction_details.id_transaction', '=', '1')
+                                      ->get();
+        return response()->json($data);
     }
 }

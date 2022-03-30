@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Menu;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Carbon\Carbon;
 
 class TransactionController extends Controller
@@ -36,5 +37,17 @@ class TransactionController extends Controller
             'message' => 'Add Data Transaction Success',
             'data' => $data
         ]);
+    }
+    public function bayar($id)
+    {
+        $transaksi = Transaction::where('id_transaction', '=', $id)->first();
+        $total = TransactionDetail::where('id_detail', $id)->sum('subtotal');
+
+        $transaksi->status = "away";
+        $transaksi->total = $total;        
+        
+        $transaksi->save();
+        
+        return response()->json(['message' => 'Pembayaran berhasil']);
     }
 }

@@ -22,6 +22,19 @@ use App\Http\Controllers\TransactionDetailController;
 // });
 
 Route::get('menu', [MenuController::class, 'index']);
+
+Route::get('unggulan/makan', [MenuController::class, 'unggulanMakan']);
+Route::get('unggulan/minum', [MenuController::class, 'unggulanMinum']);
+Route::get('unggulan/snack', [MenuController::class, 'unggulanSnack']);
+
+Route::get('makanan', [MenuController::class, 'makanan']);
+Route::get('minuman', [MenuController::class, 'minuman']);
+Route::get('snack', [MenuController::class, 'snack']);
+
 Route::post('transaction', [TransactionController::class, 'store']);
-Route::post('detailtransaction', [TransactionDetailController::class, 'store']);
+Route::post('bayar/{id}', [TransactionController::class, 'bayar']);
+
+Route::get('keranjang', [TransactionDetailController::class, 'getById']);
+Route::get('total/{id}', [TransactionDetailController::class, 'getTotal']);
+Route::post('detail_transaction', [TransactionDetailController::class, 'store']);
 
